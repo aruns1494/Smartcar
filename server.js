@@ -70,4 +70,4 @@ app.use(function(err, req, res, next) {
 app.listen(port);
 console.log("Smartcar API server started on port " + port);
 
-// module.exports = app;
+module.exports = app;
