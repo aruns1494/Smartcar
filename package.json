@@ -4,7 +4,7 @@
   "description": "Restful API for accessing smart car data",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "start": "node server.js"
   },
   "repository": {
