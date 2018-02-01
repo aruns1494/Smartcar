@@ -1,0 +1,378 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a Smartcar API service that provides key insights into your vehicle's performance.",
+    "version": "1.0.0",
+    "title": "Smartcar API",
+    "contact": {
+      "email": "asridh18@asu.edu"
+    }
+  },
+  "host": "localhost:3000",
+  "tags": [
+    {
+      "name": "vehicles",
+      "description": "Everything about your vehicles"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/vehicles/{vehicleId}": {
+      "get": {
+        "tags": [
+          "vehicles"
+        ],
+        "summary": "Find vehicle by ID",
+        "description": "Returns vehicle information",
+        "operationId": "getvehicleById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "description": "ID of vehicle to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Vehicle Information Service"
+            }
+          },
+          "400": {
+            "description": "Given vehicle ID is not a valid number",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Auth token is not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Invalid Vehicle ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/{vehicleId}/fuel": {
+      "get": {
+        "tags": [
+          "vehicles"
+        ],
+        "summary": "Fuel Range",
+        "description": "Returns fuel percentage",
+        "operationId": "getFuel",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "description": "ID of vehicle to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Energy Service"
+            }
+          },
+          "400": {
+            "description": "Given vehicle ID is not a valid number",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Auth token is not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Invalid Vehicle ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/{vehicleId}/battery": {
+      "get": {
+        "tags": [
+          "vehicles"
+        ],
+        "summary": "Battery Range",
+        "description": "Returns battery percentage",
+        "operationId": "getBattery",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "description": "ID of vehicle to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Energy Service"
+            }
+          },
+          "400": {
+            "description": "Given vehicle ID is not a valid number",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Auth token is not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Invalid Vehicle ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/{vehicleId}/engine": {
+      "post": {
+        "tags": [
+          "vehicles"
+        ],
+        "summary": "Start/Stop Engine",
+        "description": "",
+        "operationId": "getEngine",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "description": "ID of vehicle to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Action to be performed on the vehicle",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Engine Action Request"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Engine Action Response"
+            }
+          },
+          "400": {
+            "description": "Request is invalid",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Auth token is not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Invalid Vehicle ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/{vehicleId}/doors": {
+      "get": {
+        "tags": [
+          "vehicles"
+        ],
+        "summary": "Get door info",
+        "description": "",
+        "operationId": "getDoor",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "description": "ID of vehicle to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Security Status"
+              },
+              "example": [
+                {
+                  "location": "frontLeft",
+                  "locked": true
+                },
+                {
+                  "location": "frontRight",
+                  "locked": true
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Given vehicle ID is not a valid number",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Auth token is not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Invalid Vehicle ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Vehicle Information Service": {
+      "type": "object",
+      "properties": {
+        "vin": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "doorCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "color": {
+          "type": "string",
+          "example": "Metallic Silver"
+        },
+        "driveTrain": {
+          "type": "string",
+          "example": "v8"
+        }
+      },
+      "xml": {
+        "name": "vehicle"
+      }
+    },
+    "Engine Action Request": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "example": "START|STOP"
+        }
+      }
+    },
+    "Engine Action Response": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success|error"
+        }
+      }
+    },
+    "Energy Service": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64",
+          "example": 30
+        }
+      }
+    },
+    "Security Status": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string"
+        },
+        "locked": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "NotFound"
+        },
+        "message": {
+          "type": "string",
+          "example": "Entity with id: 1236 could not be found"
+        },
+        "statusCode": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  }
+}
