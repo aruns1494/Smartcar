@@ -60,6 +60,13 @@ let energyResponse = (response) => {
     expect(percent).to.be.a('number');
 }
 
+/*
+ * Checks whether the error response json for all routes is according to standard
+ * The structure of the error response json is the same for all kinds of errors
+ * A standard error response helped in maintaining the logs in a more structured fashion
+ * The error codes include 400, 404, 422, 502, 500.
+ */
+
 let errorTestWithoutBody = (message, id, url, status) => {
     it(message, (done) => {
           let vehicleID = id;
