@@ -75,11 +75,9 @@ let errorTestWithoutBody = (message, id, url, status) => {
 
 let errorTestWithBody = (message, id, url, status, body) => {
 
-    console.log(body);
     it(message, (done) => {
           let vehicleID = id;
           let data = body;
-          console.log(data);
           chai.request(server)
               .post(url)
               .send(data)
@@ -95,14 +93,14 @@ let errorTestWithBody = (message, id, url, status, body) => {
  * Test the /GET/vehicle/:id route
  * The route has been tested for one successful case and for two error scenarios
  */
-
+let infoData = config.get('testScriptValues').VehicleInformationTest;
 describe('/GET Vehicle Information', () => {
-    it('It should retreive the information of a vehicle given its ID', (done) => {
-          let vehicleID = '1234';
+    it(infoData.Success.message, (done) => {
+          let vehicleID = infoData.Success.id;
           chai.request(server)
-              .get('/vehicles/' + vehicleID)
+              .get(infoData.Success.url)
               .end((error, response) => {
-                  response.should.have.status(200);
+                  response.should.have.status(infoData.Success.status);
                   response.body.should.be.a('Object');
 
                   let length = Object.keys(response.body).length;
@@ -126,8 +124,8 @@ describe('/GET Vehicle Information', () => {
               });
     });
 
-    errorTestWithoutBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236', 404);
-    errorTestWithoutBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash', 400);
+    errorTestWithoutBody(infoData.NotFound.message, infoData.NotFound.id, infoData.NotFound.url, infoData.NotFound.status);
+    errorTestWithoutBody(infoData.BadRequest.message, infoData.BadRequest.id, infoData.BadRequest.url, infoData.BadRequest.status);
 
 });
 
@@ -135,14 +133,14 @@ describe('/GET Vehicle Information', () => {
  * Test the /GET/vehicle/:id/doors route
  * The route has been tested for one successful case and for two error scenarios
  */
-
+let securityData = config.get("testScriptValues").VehicleSecurityStatusTest;
 describe('/GET Vehicle Security Status', () => {
-    it('It should retreive the security status of a vehicle given its ID', (done) => {
-          let vehicleID = '1234';
+    it(securityData.Success.message, (done) => {
+          let vehicleID = securityData.Success.id;
           chai.request(server)
-              .get('/vehicles/' + vehicleID + '/doors')
+              .get(securityData.Success.url)
               .end((error, response) => {
-                  response.should.have.status(200);
+                  response.should.have.status(securityData.Success.status);
                   response.body.should.be.an('array');
 
                   expect(response.body).to.have.length.below(5);
@@ -161,8 +159,8 @@ describe('/GET Vehicle Security Status', () => {
               });
     });
 
-    errorTestWithoutBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236/doors', 404);
-    errorTestWithoutBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash/doors', 400);
+    errorTestWithoutBody(securityData.NotFound.message, securityData.NotFound.id, securityData.NotFound.url, securityData.NotFound.status);
+    errorTestWithoutBody(securityData.BadRequest.message, securityData.BadRequest.id, securityData.BadRequest.url, securityData.BadRequest.status);
 
 });
 
@@ -170,21 +168,21 @@ describe('/GET Vehicle Security Status', () => {
  * Test the /GET/vehicle/:id/fuel route
  * The route has been tested for one successful case and for two error scenarios
  */
-
+let fuelData = config.get("testScriptValues").VehicleFuelLevelTest;
 describe('/GET Vehicle Fuel Level', () => {
-    it('It should retreive the fuel level of a vehicle given its ID', (done) => {
-          let vehicleID = '1234';
+    it(fuelData.Success.message, (done) => {
+          let vehicleID = fuelData.Success.id;
           chai.request(server)
-              .get('/vehicles/' + vehicleID + '/fuel')
+              .get(fuelData.Success.url)
               .end((error, response) => {
-                  response.should.have.status(200);
+                  response.should.have.status(fuelData.Success.status);
                   energyResponse(response);
                   done();
               });
     });
 
-    errorTestWithoutBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236/fuel', 404);
-    errorTestWithoutBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash/fuel', 400);
+    errorTestWithoutBody(fuelData.NotFound.message, fuelData.NotFound.id, fuelData.NotFound.url, fuelData.NotFound.status);
+    errorTestWithoutBody(fuelData.BadRequest.message, fuelData.BadRequest.id, fuelData.BadRequest.url, fuelData.BadRequest.status);
 
 });
 
@@ -192,21 +190,21 @@ describe('/GET Vehicle Fuel Level', () => {
  * Test the /GET/vehicle/:id/battery route
  * The route has been tested for one successful case and for two error scenarios
  */
-
+let batteryData = config.get("testScriptValues").VehicleBatteryLevelTest;
 describe('/GET Vehicle Battery Level', () => {
-    it('It should retreive the battery level of a vehicle given its ID', (done) => {
-          let vehicleID = '1235';
+    it(batteryData.Success.message, (done) => {
+          let vehicleID = batteryData.Success.id;
           chai.request(server)
-              .get('/vehicles/' + vehicleID + '/battery')
+              .get(batteryData.Success.url)
               .end((error, response) => {
-                  response.should.have.status(200);
+                  response.should.have.status(batteryData.Success.status);
                   energyResponse(response);
                   done();
               });
     });
 
-    errorTestWithoutBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236/battery', 404);
-    errorTestWithoutBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash/battery', 400);
+    errorTestWithoutBody(batteryData.NotFound.message, batteryData.NotFound.id, batteryData.NotFound.url, batteryData.NotFound.status);
+    errorTestWithoutBody(batteryData.BadRequest.message, batteryData.BadRequest.id, batteryData.BadRequest.url, batteryData.BadRequest.status);
 
 });
 
@@ -214,19 +212,19 @@ describe('/GET Vehicle Battery Level', () => {
  * Test the /POST/vehicle/:id/engine route
  * The route has been tested for one successful case and for three error scenarios
  */
-
+let engineData = config.get("testScriptValues").VehicleEngineActionTest;
 describe('/POST Executing Engine Action', () => {
-    it('It should execute the specified action on a vehicle (given its ID) and display the appropriate message', (done) => {
-          let vehicleID = '1234';
+    it(engineData.Success.message, (done) => {
+          let vehicleID = engineData.Success.id;
           let data = {
-              action : 'START'
+              action : engineData.Success.body.action
           };
           chai.request(server)
-              .post('/vehicles/' + vehicleID + '/engine')
+              .post(engineData.Success.url)
               .send(data)
               .end((error, response) => {
 
-                  response.should.have.status(200);
+                  response.should.have.status(engineData.Success.status);
                   response.body.should.be.a('Object');
 
                   let length = Object.keys(response.body).length;
@@ -242,13 +240,13 @@ describe('/POST Executing Engine Action', () => {
     });
 
     let body = {
-        action : 'STOP'
+        action : engineData.NotFound.body.action
     };
     let errorBody = {
-        action : 'DUMMY'
+        action : engineData.UnprocessableEntity.body.action
     }
-    errorTestWithBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236/engine', 404, body);
-    errorTestWithBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash/engine', 400, body);
-    errorTestWithBody('It should display an error stating specified action cannot be processed as it is invalid', '1234', '/vehicles/ash/engine', 422, errorBody);
+    errorTestWithBody(engineData.NotFound.message, engineData.NotFound.id, engineData.NotFound.url, engineData.NotFound.status, body);
+    errorTestWithBody(engineData.BadRequest.message, engineData.BadRequest.id, engineData.BadRequest.url, engineData.BadRequest.status, body);
+    errorTestWithBody(engineData.UnprocessableEntity.message, engineData.UnprocessableEntity.id, engineData.UnprocessableEntity.url, engineData.UnprocessableEntity.status, errorBody);
 
 });

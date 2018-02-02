@@ -24,7 +24,7 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Vehicle information",
+        "summary": "Vehicle Information Service",
         "description": "Retrieves the information of a vehicle given it's ID",
         "operationId": "getvehicleById",
         "produces": [
@@ -73,7 +73,7 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Vehicle fuel level",
+        "summary": "Vehicle Energy Service (Fuel)",
         "description": "Retrieves the fuel level of the vehicle given it's ID",
         "operationId": "getFuel",
         "produces": [
@@ -122,7 +122,7 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Vehicle battery level",
+        "summary": "Vehicle Energy Service (Battery)",
         "description": "Retrieves the battery level of the vehicle given it's ID",
         "operationId": "getBattery",
         "produces": [
@@ -171,7 +171,7 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Executing engine action",
+        "summary": "Vehicle Engine Action Service",
         "description": "Executes the specified action on a vehicle with given ID",
         "operationId": "getEngine",
         "consumes": [
@@ -238,7 +238,7 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Vehicle security status",
+        "summary": "Vehicle Security Service",
         "description": "Retrieves the security status of the vehicle given it's ID",
         "operationId": "getDoor",
         "consumes": [

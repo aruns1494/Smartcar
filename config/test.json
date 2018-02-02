@@ -18,6 +18,132 @@
 				"log_definition" : "./lib/logs/gmVehicleLogs"
 		},
 
+		"testScriptValues" : {
+				"VehicleInformationTest" : {
+						"NotFound" : {
+								"message" : "It should display an error stating given vehicle ID is not found",
+								"id" : "1236",
+								"status" : 404,
+								"url" : "/vehicles/1236"
+						},
+						"BadRequest" : {
+							"message" : "It should display an error stating given vehicle ID is not a valid number",
+							"id" : "ash",
+							"status" : 400,
+							"url" : "/vehicles/ash"
+						},
+						"Success" : {
+								"message" : "It should retreive the information of a vehicle given its ID",
+								"id" : "1234",
+								"url" : "/vehicles/1234",
+								"status" : 200
+						}
+
+				},
+				"VehicleSecurityStatusTest" : {
+						"NotFound" : {
+								"message" : "It should display an error stating given vehicle ID is not found",
+								"id" : "1236",
+								"status" : 404,
+								"url" : "/vehicles/1236/doors"
+						},
+						"BadRequest" : {
+							"message" : "It should display an error stating given vehicle ID is not a valid number",
+							"id" : "ash",
+							"status" : 400,
+							"url" : "/vehicles/ash/doors"
+						},
+						"Success" : {
+								"message" : "It should retreive the security status of a vehicle given its ID",
+								"id" : "1234",
+								"url" : "/vehicles/1234/doors",
+								"status" : 200
+						}
+
+				},
+				"VehicleFuelLevelTest" : {
+						"NotFound" : {
+								"message" : "It should display an error stating given vehicle ID is not found",
+								"id" : "1236",
+								"status" : 404,
+								"url" : "/vehicles/1236/fuel"
+						},
+						"BadRequest" : {
+							"message" : "It should display an error stating given vehicle ID is not a valid number",
+							"id" : "ash",
+							"status" : 400,
+							"url" : "/vehicles/ash/fuel"
+						},
+						"Success" : {
+								"message" : "It should retreive the fuel level of a vehicle given its ID",
+								"id" : "1234",
+								"url" : "/vehicles/1234/fuel",
+								"status" : 200
+						}
+
+				},
+				"VehicleBatteryLevelTest" : {
+						"NotFound" : {
+								"message" : "It should display an error stating given vehicle ID is not found",
+								"id" : "1236",
+								"status" : 404,
+								"url" : "/vehicles/1236/battery"
+						},
+						"BadRequest" : {
+							"message" : "It should display an error stating given vehicle ID is not a valid number",
+							"id" : "ash",
+							"status" : 400,
+							"url" : "/vehicles/ash/battery"
+						},
+						"Success" : {
+								"message" : "It should retreive the battery level of a vehicle given its ID",
+								"id" : "1235",
+								"url" : "/vehicles/1235/battery",
+								"status" : 200
+						}
+
+				},
+				"VehicleEngineActionTest" : {
+						"NotFound" : {
+								"message" : "It should display an error stating given vehicle ID is not found",
+								"id" : "1236",
+								"status" : 404,
+								"url" : "/vehicles/1236/engine",
+								"body" : {
+										"action" : "START"
+								}
+						},
+						"BadRequest" : {
+							"message" : "It should display an error stating given vehicle ID is not a valid number",
+							"id" : "ash",
+							"status" : 400,
+							"url" : "/vehicles/ash/engine",
+							"body" : {
+									"action" : "STOP"
+							}
+						},
+						"Success" : {
+								"message" : "It should execute the specified action on a vehicle (given its ID) and display the appropriate message",
+								"id" : "1234",
+								"url" : "/vehicles/1234/engine",
+								"body" : {
+										"action" : "STOP"
+								},
+								"status" : 200
+						},
+						"UnprocessableEntity" : {
+								"message" : "It should display an error stating specified action cannot be processed as it is invalid",
+								"id" : "ash",
+								"status" : 422,
+								"url" : "/vehicles/1234/engine",
+								"body" : {
+										"action" : "dummy"
+								}
+						}
+
+				}
+		},
+
 		"genericMotorApi" : {
 				"links" : {
 							"getVehicleInfoService" : {
