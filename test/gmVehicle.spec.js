@@ -60,6 +60,37 @@ let energyResponse = (response) => {
     expect(percent).to.be.a('number');
 }
 
+let errorTestWithoutBody = (message, id, url, status) => {
+    it(message, (done) => {
+          let vehicleID = id;
+          chai.request(server)
+              .get(url)
+              .end((error, response) => {
+                  response.should.have.status(status);
+                  errorResponse(response);
+                  done();
+              });
+    });
+}
+
+let errorTestWithBody = (message, id, url, status, body) => {
+
+    console.log(body);
+    it(message, (done) => {
+          let vehicleID = id;
+          let data = body;
+          console.log(data);
+          chai.request(server)
+              .post(url)
+              .send(data)
+              .end((error, response) => {
+                  response.should.have.status(status);
+                  errorResponse(response);
+                  done();
+              });
+    });
+}
+
 /*
  * Test the /GET/vehicle/:id route
  * The route has been tested for one successful case and for two error scenarios
@@ -95,27 +126,8 @@ describe('/GET Vehicle Information', () => {
               });
     });
 
-    it('It should display an error stating given vehicle ID is not found', (done) => {
-          let vehicleID = '1236';
-          chai.request(server)
-              .get('/vehicles/' + vehicleID)
-              .end((error, response) => {
-                  response.should.have.status(404);
-                  errorResponse(response);
-                  done();
-              });
-    });
-
-    it('It should display an error stating given vehicle ID is not a valid number', (done) => {
-          let vehicleID = 'ash';
-          chai.request(server)
-              .get('/vehicles/' + vehicleID)
-              .end((error, response) => {
-                  response.should.have.status(400);
-                  errorResponse(response);
-                  done();
-              });
-    });
+    errorTestWithoutBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236', 404);
+    errorTestWithoutBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash', 400);
 
 });
 
@@ -149,27 +161,8 @@ describe('/GET Vehicle Security Status', () => {
               });
     });
 
-    it('It should display an error stating given vehicle ID is not found', (done) => {
-          let vehicleID = '1236';
-          chai.request(server)
-              .get('/vehicles/' + vehicleID + '/doors')
-              .end((error, response) => {
-                  response.should.have.status(404);
-                  errorResponse(response);
-                  done();
-              });
-    });
-
-    it('It should display an error stating given vehicle ID is not valid', (done) => {
-          let vehicleID = 'ash';
-          chai.request(server)
-              .get('/vehicles/' + vehicleID + '/doors')
-              .end((error, response) => {
-                  response.should.have.status(400);
-                  errorResponse(response);
-                  done();
-              });
-    });
+    errorTestWithoutBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236/doors', 404);
+    errorTestWithoutBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash/doors', 400);
 
 });
 
@@ -190,27 +183,8 @@ describe('/GET Vehicle Fuel Level', () => {
               });
     });
 
-    it('It should display an error stating given vehicle ID is not found', (done) => {
-          let vehicleID = '1236';
-          chai.request(server)
-              .get('/vehicles/' + vehicleID + '/fuel')
-              .end((error, response) => {
-                  response.should.have.status(404);
-                  errorResponse(response);
-                  done();
-              });
-    });
-
-    it('It should display an error stating given vehicle ID is not valid', (done) => {
-          let vehicleID = 'ash';
-          chai.request(server)
-              .get('/vehicles/' + vehicleID + '/fuel')
-              .end((error, response) => {
-                  response.should.have.status(400);
-                  errorResponse(response);
-                  done();
-              });
-    });
+    errorTestWithoutBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236/fuel', 404);
+    errorTestWithoutBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash/fuel', 400);
 
 });
 
@@ -231,27 +205,8 @@ describe('/GET Vehicle Battery Level', () => {
               });
     });
 
-    it('It should display an error stating given vehicle ID is not found', (done) => {
-          let vehicleID = '1236';
-          chai.request(server)
-              .get('/vehicles/' + vehicleID + '/battery')
-              .end((error, response) => {
-                  response.should.have.status(404);
-                  errorResponse(response);
-                  done();
-              });
-    });
-
-    it('It should display an error stating given vehicle ID is not valid', (done) => {
-          let vehicleID = 'ash';
-          chai.request(server)
-              .get('/vehicles/' + vehicleID + '/battery')
-              .end((error, response) => {
-                  response.should.have.status(400);
-                  errorResponse(response);
-                  done();
-              });
-    });
+    errorTestWithoutBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236/battery', 404);
+    errorTestWithoutBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash/battery', 400);
 
 });
 
@@ -286,49 +241,14 @@ describe('/POST Executing Engine Action', () => {
               });
     });
 
-    it('It should display an error stating given vehicle ID is not found', (done) => {
-          let vehicleID = '1236';
-          let data = {
-              action : "START"
-          };
-          chai.request(server)
-              .post('/vehicles/' + vehicleID + '/engine')
-              .send(data)
-              .end((error, response) => {
-                  response.should.have.status(404);
-                  errorResponse(response);
-                  done();
-              });
-    });
-
-    it('It should display an error stating given vehicle ID is not a valid number', (done) => {
-          let vehicleID = 'ash';
-          let data = {
-              action : "START"
-          };
-          chai.request(server)
-              .post('/vehicles/' + vehicleID + '/engine')
-              .send(data)
-              .end((error, response) => {
-                  response.should.have.status(400);
-                  errorResponse(response);
-                  done();
-              });
-    });
-
-    it('It should display an error stating specified action cannot be processed as it is invalid', (done) => {
-          let vehicleID = '1234';
-          let data = {
-              action : "DUMMY"
-          };
-          chai.request(server)
-              .post('/vehicles/' + vehicleID + '/engine')
-              .send(data)
-              .end((error, response) => {
-                  response.should.have.status(422);
-                  errorResponse(response);
-                  done();
-              });
-    });
+    let body = {
+        action : 'STOP'
+    };
+    let errorBody = {
+        action : 'DUMMY'
+    }
+    errorTestWithBody('It should display an error stating given vehicle ID is not found', '1236', '/vehicles/1236/engine', 404, body);
+    errorTestWithBody('It should display an error stating given vehicle ID is not a valid number', 'ash', '/vehicles/ash/engine', 400, body);
+    errorTestWithBody('It should display an error stating specified action cannot be processed as it is invalid', '1234', '/vehicles/ash/engine', 422, errorBody);
 
 });

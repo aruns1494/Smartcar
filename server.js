@@ -14,13 +14,12 @@ let swaggerUi = require('swagger-ui-express');
 let swaggerDocument = require('./swagger.json');
 let moment = require('moment');
 let uuid = require('uuid/v1');
-//console.log(process.env.NODE_ENV);
+
 if(process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
-    console.log(process.env.NODE_ENV);
     process.exit(1);
     //process.env.NODE_ENV = 'development';
 }
-console.log(process.env.NODE_ENV);
+
 let log = require(process.env.LOGS_DEFINITION_PATH || config.get('filePath').log_definition);
 let port = process.env.APP_PORT || config.get('app').port;
 let dbPort = process.env.DB_PORT || config.get('db').port;
