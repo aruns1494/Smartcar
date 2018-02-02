@@ -13,8 +13,8 @@
 				"smartcarController" : "../controllers/gmVehicleController",
 				"smartcarRoute" :	"./lib/routes/gmVehicleRoute",
 				"server" : "../server",
-				"info_logs" : "./logs/info.log",
-				"error_logs" : "./logs/error.log",
+				"info_logs" : "./logs/",
+				"error_logs" : "./logs/",
 				"log_definition" : "./lib/logs/gmVehicleLogs"
 		},
 

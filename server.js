@@ -16,7 +16,9 @@ let helmet = require('helmet');
 let app = express();
 let swaggerUi = require('swagger-ui-express');
 let swaggerDocument = require('./swagger.json');
-let logger = require(process.env.LOGS_DEFINITION_PATH || config.get('filePath').log_definition);
+let moment = require('moment');
+let uuid = require('uuid/v1');
+let log = require(process.env.LOGS_DEFINITION_PATH || config.get('filePath').log_definition);
 let port = process.env.APP_PORT || config.get('app').port;
 let dbPort = process.env.DB_PORT || config.get('db').port;
 let dbName = process.env.DB_NAME || config.get('db').name;
@@ -85,19 +87,18 @@ routes(app, smartcarControllerFilePath);
 /*
  * Middleware for logging status messages in respective log files
  */
-app.use(function(err, req, res, next) {
+app.use(function(info, req, res, next) {
 
-    if(err.statusCode !== undefined && err.statusCode >= 200 && err.statusCode < 300) {
-        logger.log('info', err);
-    } else if(err.statusCode !== undefined){
-        logger.log('error', err);
+    if(info.statusCode !== undefined && info.statusCode > 300 && info.statusCode <= 511) {
+        let message = " | " + uuid() + " | " + info.name + " | " + info.message + " | " + info.statusCode;
+        log.error(message);
     }
 
     if (req.app.get('env') !== 'development' && req.app.get('env') !== 'test') {
-        delete err.stack;
+        delete info.stack;
     }
     res.setHeader('Content-Type', 'application/json');
-    res.status(err.statusCode || 500).json(err);
+    res.status(info.statusCode || 500).json(info);
 });
 
 app.listen(port);
