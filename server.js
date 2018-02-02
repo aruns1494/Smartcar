@@ -1,15 +1,11 @@
 /*
  * Would have handled this more maturely if there were a lot more environments to consider by creating a config.js file in the config folder
  */
-if(process.env.NODE_ENV !== 'development' || process.env.NODE_ENV !== 'test') {
-    process.env.NODE_ENV = 'development';
-}
-
 'use strict';
 
 let express = require('express');
 let bodyParser = require('body-parser');
-let dotenv = require('dotenv').config();
+let dotenv = require('dotenv').load();
 let config = require('config');
 let jwt = require('jsonwebtoken');
 let helmet = require('helmet');
@@ -18,6 +14,13 @@ let swaggerUi = require('swagger-ui-express');
 let swaggerDocument = require('./swagger.json');
 let moment = require('moment');
 let uuid = require('uuid/v1');
+//console.log(process.env.NODE_ENV);
+if(process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
+    console.log(process.env.NODE_ENV);
+    process.exit(1);
+    //process.env.NODE_ENV = 'development';
+}
+console.log(process.env.NODE_ENV);
 let log = require(process.env.LOGS_DEFINITION_PATH || config.get('filePath').log_definition);
 let port = process.env.APP_PORT || config.get('app').port;
 let dbPort = process.env.DB_PORT || config.get('db').port;
@@ -89,16 +92,26 @@ routes(app, smartcarControllerFilePath);
  */
 app.use(function(info, req, res, next) {
 
+    let result;
+
     if(info.statusCode !== undefined && info.statusCode > 300 && info.statusCode <= 511) {
-        let message = " | " + uuid() + " | " + info.name + " | " + info.message + " | " + info.statusCode;
-        log.error(message);
+        result = "| " + uuid() + " | " + info.name + " | " + info.message + " | " + info.statusCode;
+        log.logError.error(result);
+
+    } else if(info.message.statusCode !== undefined && info.message.statusCode >= 200 && info.message.statusCode <= 300) {
+
+        result = "| " + uuid() + " | " + info.message.name + " | " + info.message.msg + " | " + info.message.statusCode + " | " + JSON.stringify(info.body);
+        log.logInfo.info(result);
     }
 
     if (req.app.get('env') !== 'development' && req.app.get('env') !== 'test') {
         delete info.stack;
     }
-    res.setHeader('Content-Type', 'application/json');
-    res.status(info.statusCode || 500).json(info);
+
+    if(info.statusCode !== undefined && info.statusCode > 300 && info.statusCode <= 511) {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(info.statusCode || 500).json(info);
+    }
 });
 
 app.listen(port);

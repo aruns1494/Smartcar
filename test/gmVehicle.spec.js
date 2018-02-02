@@ -270,7 +270,7 @@ describe('/POST Executing Engine Action', () => {
               .post('/vehicles/' + vehicleID + '/engine')
               .send(data)
               .end((error, response) => {
-                  //console.log(response);
+
                   response.should.have.status(200);
                   response.body.should.be.a('Object');
 
