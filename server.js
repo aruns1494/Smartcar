@@ -1,5 +1,5 @@
 /*
- * Would have handled this more maturely if there were lot more environments to consider by creating a config.js file in the config folder
+ * Would have handled this more maturely if there were a lot more environments to consider by creating a config.js file in the config folder
  */
 if(process.env.NODE_ENV !== 'development' || process.env.NODE_ENV !== 'test') {
     process.env.NODE_ENV = 'development';
@@ -55,26 +55,27 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', routes);
 
 /*
- * Middleware for decoding users Authorization token
- * Below method then makes a callback to the toke analyzer method in the controller section
+ * Middleware for decoding user's Authorization token
+ * Below method then makes a callback to the token analyzer method in the controller section
+ * This module could be implemented in a production environment for allowing secure access to API
+ * The authorization token module can also be implemented using the passport.js library
  */
 
 app.use(function (req, res, next) {
     let token = req.body.token || req.headers || req.headers['x-access-token'];
-    let user;
 
     if(token) {
         jwt.verify(token, apiKey, function(err, decoded) {
               if(err) {
-                  user = undefined;
+                  req.user = undefined;
               } else {
-                  user = decoded;
+                  req.user = decoded;
               }
 
               next();
         });
     } else {
-        user = undefined;
+        req.user = undefined;
         next();
     }
 });

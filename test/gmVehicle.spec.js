@@ -1,6 +1,6 @@
 /*
- * Contains test cases for all REST end points
- * Followed the BDD approach for developing the REST end points
+ * Contains test cases for all REST endpoints
+ * Followed the BDD approach for developing the REST endpoints
  * The test scripts were developed using Chai framework
  * Mocha was used to execute the test scripts
  * The test scripts have been configured to run only in the test environment.
@@ -10,12 +10,12 @@
 
 process.env.NODE_ENV = 'test';
 
-let config = require('config'),
-    chai = require('chai'),
-    chaiHttp = require('chai-http'),
-    server = require(config.get('filePath').server);
-    should = chai.should(),
-    expect = chai.expect;
+let config = require('config');
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let server = require(config.get('filePath').server);
+let should = chai.should();
+let expect = chai.expect;
 
 chai.use(chaiHttp);
 
@@ -316,7 +316,7 @@ describe('/POST Executing Engine Action', () => {
               });
     });
 
-    it('It should display an error stating specified action cannot be processed as invalid', (done) => {
+    it('It should display an error stating specified action cannot be processed as it is invalid', (done) => {
           let vehicleID = '1234';
           let data = {
               action : "DUMMY"
