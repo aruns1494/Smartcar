@@ -12,7 +12,7 @@
   "tags": [
     {
       "name": "vehicles",
-      "description": "Everything about your vehicles"
+      "description": "Everything about vehicles"
     }
   ],
   "schemes": [
@@ -24,8 +24,8 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Find vehicle by ID",
-        "description": "Returns vehicle information",
+        "summary": "Vehicle information",
+        "description": "Retrieves the information of a vehicle given it's ID",
         "operationId": "getvehicleById",
         "produces": [
           "application/json"
@@ -48,21 +48,21 @@
             }
           },
           "400": {
-            "description": "Given vehicle ID is not a valid number",
+            "description": "Error: Bad Request",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_BadRequest"
             }
           },
           "403": {
-            "description": "Auth token is not found",
+            "description": "Error: Forbidden",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_Forbidden"
             }
           },
           "404": {
-            "description": "Invalid Vehicle ID",
+            "description": "Error: Not Found",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_NotFound"
             }
           }
         }
@@ -73,8 +73,8 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Fuel Range",
-        "description": "Returns fuel percentage",
+        "summary": "Vehicle fuel level",
+        "description": "Retrieves the fuel level of the vehicle given it's ID",
         "operationId": "getFuel",
         "produces": [
           "application/json"
@@ -97,21 +97,21 @@
             }
           },
           "400": {
-            "description": "Given vehicle ID is not a valid number",
+            "description": "Error: Bad Request",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_BadRequest"
             }
           },
           "403": {
-            "description": "Auth token is not found",
+            "description": "Error: Forbidden",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_Forbidden"
             }
           },
           "404": {
-            "description": "Invalid Vehicle ID",
+            "description": "Error: Not Found",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_NotFound"
             }
           }
         }
@@ -122,8 +122,8 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Battery Range",
-        "description": "Returns battery percentage",
+        "summary": "Vehicle battery level",
+        "description": "Retrieves the battery level of the vehicle given it's ID",
         "operationId": "getBattery",
         "produces": [
           "application/json"
@@ -146,21 +146,21 @@
             }
           },
           "400": {
-            "description": "Given vehicle ID is not a valid number",
+            "description": "Error: Bad Request",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_BadRequest"
             }
           },
           "403": {
-            "description": "Auth token is not found",
+            "description": "Error: Forbidden",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_Forbidden"
             }
           },
           "404": {
-            "description": "Invalid Vehicle ID",
+            "description": "Error: Not Found",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_NotFound"
             }
           }
         }
@@ -171,8 +171,8 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Start/Stop Engine",
-        "description": "",
+        "summary": "Executing engine action",
+        "description": "Executes the specified action on a vehicle with given ID",
         "operationId": "getEngine",
         "consumes": [
           "application/json"
@@ -207,21 +207,27 @@
             }
           },
           "400": {
-            "description": "Request is invalid",
+            "description": "Error: Bad Request",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_BadRequest"
             }
           },
           "403": {
-            "description": "Auth token is not found",
+            "description": "Error: Forbidden",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_Forbidden"
             }
           },
           "404": {
-            "description": "Invalid Vehicle ID",
+            "description": "Error: Not Found",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_NotFound"
+            }
+          },
+          "422": {
+            "description": "Error: UnprocessableEntity",
+            "schema": {
+              "$ref": "#/definitions/Error_UnprocessableEntity"
             }
           }
         }
@@ -232,8 +238,8 @@
         "tags": [
           "vehicles"
         ],
-        "summary": "Get door info",
-        "description": "",
+        "summary": "Vehicle security status",
+        "description": "Retrieves the security status of the vehicle given it's ID",
         "operationId": "getDoor",
         "consumes": [
           "multipart/form-data"
@@ -272,21 +278,21 @@
             }
           },
           "400": {
-            "description": "Given vehicle ID is not a valid number",
+            "description": "Error: Bad Request",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_BadRequest"
             }
           },
           "403": {
-            "description": "Auth token is not found",
+            "description": "Error: Forbidden",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_Forbidden"
             }
           },
           "404": {
-            "description": "Invalid Vehicle ID",
+            "description": "Error: Not Found",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Error_NotFound"
             }
           }
         }
@@ -298,8 +304,8 @@
       "type": "object",
       "properties": {
         "vin": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string",
+          "example": "123422323"
         },
         "doorCount": {
           "type": "integer",
@@ -339,7 +345,7 @@
     "Energy Service": {
       "type": "object",
       "properties": {
-        "status": {
+        "percent": {
           "type": "integer",
           "format": "int64",
           "example": 30
@@ -357,7 +363,7 @@
         }
       }
     },
-    "Error": {
+    "Error_NotFound": {
       "type": "object",
       "properties": {
         "name": {
@@ -366,9 +372,76 @@
         },
         "message": {
           "type": "string",
-          "example": "Entity with id: 1236 could not be found"
+          "example": "Entity with ID: 1236 could not be found"
         },
         "statusCode": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "errorCode": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "Error_BadRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "BadRequest"
+        },
+        "message": {
+          "type": "string",
+          "example": "Invalid request as the ID entered is not a valid number"
+        },
+        "statusCode": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "errorCode": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "Error_Forbidden": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Forbidden"
+        },
+        "message": {
+          "type": "string",
+          "example": "Authorization Token is not valid"
+        },
+        "statusCode": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "errorCode": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "Error_UnprocessableEntity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "UnprocessableEntity"
+        },
+        "message": {
+          "type": "string",
+          "example": "Invalid Request as the specified action cannot be processed"
+        },
+        "statusCode": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "errorCode": {
           "type": "integer",
           "format": "int64"
         }

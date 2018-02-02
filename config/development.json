@@ -1,12 +1,12 @@
 {
 		"app"	: {
-				"port" : 2718
+				"port" : 3000
 		},
 
 		"db"	: {
 				"host" : 	"localhost",
-				"port" : 26000,
-				"name" : "testDB"
+				"port" : 27000,
+				"name" : "devDB"
 		},
 
 		"filePath" : {
