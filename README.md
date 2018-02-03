@@ -11,21 +11,35 @@ This is an application programming interface that provides users with insights i
  
 # Dependencies
 body-parser@^1.18.2
+
 config@^1.29.2
+
 dotenv@^4.0.0
+
 express@^4.16.2
+
 helmet@^3.10.0
+
 moment@^2.20.1
+
 node-fetch@^1.7.3
+
 simple-node-logger@^0.93.33
+
 swagger-ui-express@^2.0.15
+
 throw.js@^3.0.1
+
 uuid@^3.2.1
 
 ## Dev Dependencies
+
 chai@^4.1.2
+
 chai-http@^3.0.0
+
 mocha@^5.0.0
+
 nodemon@^1.14.11
 
 ## Steps To Install And Run
