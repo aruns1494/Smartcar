@@ -53,7 +53,7 @@ nodemon@^1.14.11
 
 The entire documentation for the API was done using Swagger. Once you start the npm server on port 3000, go to the following link to access the API documentation. The npm servers can be customized to start on multiple ports, just by writing a configuration file. I have not committed that file( .env) to the git, but the test environment config and the development enivorment configuration has been pushed to repository.
 
-Refer to the Swagger  documentation by accessing the following URL, http://localhost:3000/api-docs
+Refer to the Swagger  documentation by accessing the following URL, @localhost:3000/api-docs after starting the node service.
 
 ## Environments
 
